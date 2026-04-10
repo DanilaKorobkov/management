@@ -11,7 +11,8 @@
       "mcp__avito__paas_confluence_update_page",
       "mcp__avito__paas_confluence_get_page_by_id",
       "Bash(shasum:*)",
-      "mcp__avito__paas_confluence_upload_page"
+      "mcp__avito__paas_confluence_upload_page",
+      "mcp__avito__paas_confluence_get_heading_links"
     ]
   }
 }

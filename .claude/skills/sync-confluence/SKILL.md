@@ -67,6 +67,23 @@ Read the full content of the file.
 
 Convert the markdown content to valid Confluence storage XHTML. The Confluence instance does NOT have a markdown macro — all content must be native XHTML.
 
+**Local link resolution (cross-page links):**
+
+Markdown files may contain links to other process files with optional heading anchors, e.g.:
+- `[Бюджет на техдолг](processes/tech-debt.md#2-бюджет-на-техдолг-в-спринте)`
+- `[Техдолг](processes/tech-debt.md)`
+
+During XHTML conversion, resolve these links to Confluence URLs:
+
+1. Find all markdown links where the URL starts with `processes/` and ends with `.md` (with optional `#anchor`)
+2. For each such link:
+   - Extract the file path (e.g. `processes/tech-debt.md`) and optional anchor (e.g. `#2-бюджет-на-техдолг-в-спринте`)
+   - Look up `confluence_page_id` in `.claude/confluence-sync.json` by the file path
+   - **If page_id found and no anchor:** replace URL with `https://cf.avito.ru/pages/viewpage.action?pageId={page_id}`
+   - **If page_id found and anchor present:** call `paas_confluence_get_heading_links(url="https://cf.avito.ru/pages/viewpage.action?pageId={page_id}", query={anchor_heading_text})` to get the exact CF anchor URL. Use the returned URL as the link href. The `query` parameter should be the human-readable heading text derived from the anchor (replace `-` with spaces, drop leading number prefix if needed) — this filters results to the matching heading
+   - **If page_id NOT found** (file is private or not yet synced): remove the link markup, keep only the link text as plain text
+3. Then proceed with the standard markdown → XHTML conversion below
+
 **Conversion rules:**
 
 | Markdown | Confluence XHTML |

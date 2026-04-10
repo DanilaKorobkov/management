@@ -2,10 +2,15 @@
   "space_key": "MIS",
   "parent_page_id": "842230758",
   "pages": {
+    "processes/_index.md": {
+      "confluence_page_id": "842230758",
+      "last_synced_version": 2,
+      "last_synced_hash": "bc83530045abe8c7cbf795f412534af8add7781f58a4d2bf09d45ea97afe9266"
+    },
     "processes/tech-debt.md": {
       "confluence_page_id": "842230760",
-      "last_synced_version": 5,
-      "last_synced_hash": "495d50c4ffa44100a09275a3abab6acab424d5ec3deb806aa0cdce031cd4a4ca"
+      "last_synced_version": 6,
+      "last_synced_hash": "21f5a484fb9020cb7d1779c7561642dd25ff7c03a82f65810e4882537bc2cdde"
     }
   }
 }
