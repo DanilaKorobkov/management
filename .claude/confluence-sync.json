@@ -4,8 +4,8 @@
   "pages": {
     "processes/_index.md": {
       "confluence_page_id": "842230758",
-      "last_synced_version": 8,
-      "last_synced_hash": "015aa030d2d01fb11f4565e08f32689aa9f6f34d77035ee4a2f4064475ec3046"
+      "last_synced_version": 9,
+      "last_synced_hash": "428c573ab520da48a9e3cb765a54754a5bba403a221a5347e3cb72c1d684cdbe"
     },
     "processes/tech-debt.md": {
       "confluence_page_id": "842230760",
@@ -14,8 +14,8 @@
     },
     "processes/feature-requests.md": {
       "confluence_page_id": "848411953",
-      "last_synced_version": 2,
-      "last_synced_hash": "e3354cf17769d7a5ff48ddde048c55349e9e853543f4345601769008a49aa913"
+      "last_synced_version": 3,
+      "last_synced_hash": "b40030e9e1890ab8c6bcdb69b492b4dd34253a5f8b5fd286acff4ea983710fb1"
     }
   }
 }

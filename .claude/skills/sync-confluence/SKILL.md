@@ -80,7 +80,21 @@ During XHTML conversion, resolve these links to Confluence URLs:
    - Extract the file path (e.g. `processes/tech-debt.md`) and optional anchor (e.g. `#2-бюджет-на-техдолг-в-спринте`)
    - Look up `confluence_page_id` in `.claude/confluence-sync.json` by the file path
    - **If page_id found and no anchor:** replace URL with `https://cf.avito.ru/pages/viewpage.action?pageId={page_id}`
-   - **If page_id found and anchor present:** call `paas_confluence_get_heading_links(url="https://cf.avito.ru/pages/viewpage.action?pageId={page_id}", query={anchor_heading_text})` to get the exact CF anchor URL. Use the returned URL as the link href. The `query` parameter should be the human-readable heading text derived from the anchor (replace `-` with spaces, drop leading number prefix if needed) — this filters results to the matching heading
+   - **If page_id found and anchor present:** build the anchor URL locally using the Confluence anchor format (no API call needed):
+     1. Get the **page title** — the first `# H1` heading from the target markdown file
+     2. Get the **heading text** — convert the markdown anchor back to human-readable text: replace `-` with nothing (join words), but first derive the original heading text from the target file by finding the heading that matches the anchor
+     3. Build the anchor fragment: `#id-{PageTitle}-{HeadingText}` where:
+        - `{PageTitle}` = page title with **all spaces removed** (no replacement character, just concatenated)
+        - `{HeadingText}` = heading text with **all spaces removed**
+        - The entire fragment (after `#`) is then **URL-encoded** (percent-encode all non-ASCII characters including Cyrillic, and special characters like `:`, `'`, `(`, `)`, `→`)
+     4. Final URL: `https://cf.avito.ru/pages/viewpage.action?pageId={page_id}{encoded_anchor}`
+
+     **Example:** Page "Системная работа с техдолгом" (ID 842230760), heading "1. Правила заведения тикетов":
+     - Raw fragment: `#id-Системнаяработастехдолгом-1.Правилазаведениятикетов`
+     - URL-encoded: `#id-%D0%A1%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%B0%D1%8F%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D1%81%D1%82%D0%B5%D1%85%D0%B4%D0%BE%D0%BB%D0%B3%D0%BE%D0%BC-1.%D0%9F%D1%80%D0%B0%D0%B2%D0%B8%D0%BB%D0%B0%D0%B7%D0%B0%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%D1%82%D0%B8%D0%BA%D0%B5%D1%82%D0%BE%D0%B2`
+
+     **Important:** Do NOT use `paas_confluence_get_heading_links` for this — build the anchor locally to avoid extra API calls.
+
    - **If page_id NOT found** (file is private or not yet synced): remove the link markup, keep only the link text as plain text
 3. Then proceed with the standard markdown → XHTML conversion below
 
