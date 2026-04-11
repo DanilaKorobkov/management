@@ -10,9 +10,11 @@
       "mcp__avito__paas_confluence_create_page",
       "mcp__avito__paas_confluence_update_page",
       "mcp__avito__paas_confluence_get_page_by_id",
-      "Bash(shasum:*)",
       "mcp__avito__paas_confluence_upload_page",
-      "mcp__avito__paas_confluence_get_heading_links"
+      "mcp__avito__paas_confluence_get_heading_links",
+      "mcp__avito__paas_docs_search",
+      "mcp__avito__paas_mattermost_post_message",
+      "Bash(shasum:*)"
     ]
   }
 }
